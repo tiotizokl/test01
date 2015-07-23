@@ -1,0 +1,2 @@
+gradlew html:superDev
+pause

@@ -1,0 +1,2 @@
+gradlew html:dist
+pause
