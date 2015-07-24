@@ -45,7 +45,7 @@ public class PantallaInicio extends Pantalla {
 		
 		layout = new GlyphLayout();
 		
-		fuente = new BitmapFont(Gdx.files.internal("font001.fnt"),false);
+		fuente = new BitmapFont(Gdx.files.internal("font000.fnt"),false);
 		str_inicio[0] = " T120 Soft Apps ";
 		str_inicio[1] = "Pulsa para continuar";
 		count = 0;
@@ -55,9 +55,7 @@ public class PantallaInicio extends Pantalla {
 	@Override
 	public void render(float delta) {
 		
-		
-		
-		
+						
 		// TODO Auto-generated method stub
 		Gdx.gl.glClearColor(0, 0, 1, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -67,16 +65,10 @@ public class PantallaInicio extends Pantalla {
 		int img_width = img_ini01.getWidth();
 		int img_height = img_ini01.getHeight();
 		
-		
-		
-		
-		
-		
 		game.batch.begin();
 	
 		game.batch.draw(img_ini01, (p_width/2)-(img_width/2), (p_height/2)-(img_height/2) );
 
-		
 		
 		layout.setText(fuente, str_inicio[0]);		
 		fuente.draw( game.batch, str_inicio[0], (p_width/2) - (layout.width/2), (p_height/2)+(img_height/2)+20+layout.height );
@@ -92,6 +84,16 @@ public class PantallaInicio extends Pantalla {
 		}
 	
 		game.batch.end();
+		
+		// comprobamos si se tocado la pantalla
+		if (Gdx.input.isTouched()){
+			game.setScreen(game.p_menu);
+		}
+		if (Gdx.input.justTouched()){
+						
+		}
+	
+		
 	}
 
 	@Override

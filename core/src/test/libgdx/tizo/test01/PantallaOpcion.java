@@ -7,7 +7,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 
-public class PantallaMenu extends Pantalla {
+public class PantallaOpcion extends Pantalla {
 	
 	Texture img_ini01;
 	
@@ -17,14 +17,14 @@ public class PantallaMenu extends Pantalla {
 	
 	GlyphLayout layout;
 	
-	CharSequence[] str_inicio = new CharSequence[4];
+	CharSequence[] str_inicio = new CharSequence[2];
 	
 	int p_width;
 	int p_height;
     
 	int count;
 	
-	public PantallaMenu(TestInicio game) {
+	public PantallaOpcion(TestInicio game) {
 		
 		
 		
@@ -37,7 +37,7 @@ public class PantallaMenu extends Pantalla {
 	@Override
 	public void show() {
 		// TODO Auto-generated method stub
-		img_ini01  = new Texture("T120SOFT_02.png");
+		img_ini01  = new Texture("T120SOFT_01.png");
 		p_width  = Gdx.graphics.getWidth();
 		p_height = Gdx.graphics.getHeight();
 		
@@ -45,19 +45,19 @@ public class PantallaMenu extends Pantalla {
 		
 		layout = new GlyphLayout();
 		
-		fuente = new BitmapFont(Gdx.files.internal("font001.fnt"),false);
+		fuente = new BitmapFont(Gdx.files.internal("font000.fnt"),false);
 		str_inicio[0] = " T120 Soft Apps ";
-		str_inicio[1] = "EMPEZAR";
-		str_inicio[2] = "OPCIONES";
-		str_inicio[3] = "SALIR";
+		str_inicio[1] = "Pulsa para continuar";
 		count = 0;
 
 	}
 
 	@Override
 	public void render(float delta) {
+		
+						
 		// TODO Auto-generated method stub
-		Gdx.gl.glClearColor(0, 1, 0, 1);
+		Gdx.gl.glClearColor(0, 0, 1, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		
 		game.batch.setProjectionMatrix(camara.combined);
@@ -65,46 +65,35 @@ public class PantallaMenu extends Pantalla {
 		int img_width = img_ini01.getWidth();
 		int img_height = img_ini01.getHeight();
 		
-		
-		
-		
-		
-		
 		game.batch.begin();
 	
-		game.batch.draw(img_ini01, 0, 0);
+		game.batch.draw(img_ini01, (p_width/2)-(img_width/2), (p_height/2)-(img_height/2) );
 
-
-		if (count<10){
-			fuente.setColor(1, 1, 1, 1);
+		
+		layout.setText(fuente, str_inicio[0]);		
+		fuente.draw( game.batch, str_inicio[0], (p_width/2) - (layout.width/2), (p_height/2)+(img_height/2)+20+layout.height );
+		
+		count = count +1;
+		if (count<15){
+			layout.setText(fuente, str_inicio[1]);
+			fuente.draw( game.batch, str_inicio[1], (p_width/2) - (layout.width/2), (p_height/2)-(img_height/2)-layout.height );
 		}else{
-			fuente.setColor(0, 0, 0, 1);
 			if (count>19){
-				
 				count = 0;
 			}
 		}
+	
+		game.batch.end();
 		
-		
+		// comprobamos si se tocado la pantalla
+		if (Gdx.input.isTouched()){
+			game.setScreen(game.p_menu);
+		}
+		if (Gdx.input.justTouched()){
+						
+		}
 	
 		
-		layout.setText(fuente, str_inicio[0]);		
-		fuente.draw( game.batch, str_inicio[0], (p_width/2) - (layout.width/2), (p_height) );
-		
-		count = count +1;
-		
-		fuente.setColor(1, 1, 1, 1);
-		
-		layout.setText(fuente, str_inicio[1]);		
-		fuente.draw( game.batch, str_inicio[1], (p_width/2) - (layout.width/2), (p_height/2) + (layout.height*2) );
-		
-		layout.setText(fuente, str_inicio[2]);		
-		fuente.draw( game.batch, str_inicio[2], (p_width/2) - (layout.width/2), (p_height/2)  );
-		
-		layout.setText(fuente, str_inicio[3]);		
-		fuente.draw( game.batch, str_inicio[3], (p_width/2) - (layout.width/2), (p_height/2) - (layout.height*2) );
-			
-		game.batch.end();
 	}
 
 	@Override
