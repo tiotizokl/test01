@@ -17,12 +17,20 @@ public class PantallaMenu extends Pantalla {
 	
 	GlyphLayout layout;
 	
+	int[] text_x = new int[4];
+	int[] text_y = new int[4];
+	
 	CharSequence[] str_inicio = new CharSequence[4];
 	
 	int p_width;
 	int p_height;
+	
+	int pos_x_graf=0;
+	int dir_graf = 1;
     
 	int count;
+	
+	int saliendo=0;
 	
 	public PantallaMenu(TestInicio game) {
 		
@@ -63,48 +71,119 @@ public class PantallaMenu extends Pantalla {
 		game.batch.setProjectionMatrix(camara.combined);
 		
 		int img_width = img_ini01.getWidth();
-		int img_height = img_ini01.getHeight();
-		
-		
-		
+		//int img_height = img_ini01.getHeight();
 		
 		
 		
 		game.batch.begin();
+		if (saliendo==0){
+			
+		
+			game.batch.draw(img_ini01, pos_x_graf, 0);
 	
-		game.batch.draw(img_ini01, 0, 0);
-
-
-		if (count<10){
-			fuente.setColor(1, 1, 1, 1);
-		}else{
-			fuente.setColor(0, 0, 0, 1);
-			if (count>19){
+			pos_x_graf = pos_x_graf + dir_graf;		
+			if (pos_x_graf> p_width - img_width) {
+				dir_graf = -1;
+			}else{
+				if (pos_x_graf < 0){
+					dir_graf = 1;
+				}
 				
-				count = 0;
 			}
-		}
-		
-		
+				
+			
 	
-		
-		layout.setText(fuente, str_inicio[0]);		
-		fuente.draw( game.batch, str_inicio[0], (p_width/2) - (layout.width/2), (p_height) );
-		
-		count = count +1;
-		
-		fuente.setColor(1, 1, 1, 1);
-		
-		layout.setText(fuente, str_inicio[1]);		
-		fuente.draw( game.batch, str_inicio[1], (p_width/2) - (layout.width/2), (p_height/2) + (layout.height*2) );
-		
-		layout.setText(fuente, str_inicio[2]);		
-		fuente.draw( game.batch, str_inicio[2], (p_width/2) - (layout.width/2), (p_height/2)  );
-		
-		layout.setText(fuente, str_inicio[3]);		
-		fuente.draw( game.batch, str_inicio[3], (p_width/2) - (layout.width/2), (p_height/2) - (layout.height*2) );
+			if (count<10){
+				fuente.setColor(1, 1, 1, 1);
+			}else{
+				fuente.setColor(0, 0, 0, 1);
+				if (count>19){
+					
+					count = 0;
+				}
+			}
+			
+			
+			layout.setText(fuente, str_inicio[0]);		
+			text_x[0]= (int) layout.width;
+			text_y[0]= (int) layout.height;
+			fuente.draw( game.batch, str_inicio[0], (p_width/2) - (text_x[0]/2), (p_height) );
+			
+			count = count +1;
+			
+			fuente.setColor(1, 1, 1, 1);
+			
+			layout.setText(fuente, str_inicio[1]);		
+			text_x[1]= (int) layout.width;
+			text_y[1]= (int) layout.height;
+			fuente.draw( game.batch, str_inicio[1], (p_width/2) - (text_x[1]/2), (p_height/2) + (text_y[1]*2) );
+			
+			layout.setText(fuente, str_inicio[2]);		
+			text_x[2]= (int) layout.width;
+			text_y[2]= (int) layout.height;
+			fuente.draw( game.batch, str_inicio[2], (p_width/2) - (text_x[2]/2), (p_height/2)  );
+			
+			layout.setText(fuente, str_inicio[3]);
+			text_x[3]= (int) layout.width;
+			text_y[3]= (int) layout.height;
+			fuente.draw( game.batch, str_inicio[3], (p_width/2) - (text_x[3]/2), (p_height/2) - (text_y[3]*2) );
+			
+			// comprobamos si se tocado la pantalla
+			if (Gdx.input.isTouched()){
+				
+				// encima de jugar
+				if ( Gdx.input.getX() > ((p_width/2) - (text_x[1]/2)) && Gdx.input.getX() < ((p_width/2) + (text_x[1]/2) ) 
+					 && (p_height-Gdx.input.getY()) < ((p_height/2) + (text_y[1]*2)) && (p_height-Gdx.input.getY()) > ((p_height/2) + (text_y[1]*2) - text_y[1])	){
+					fuente.setColor(0, 0, 0, 1);
+					fuente.draw( game.batch, str_inicio[1], (p_width/2) - (text_x[1]/2), (p_height/2) + (text_y[1]*2) );				
+				}
+	
+				// encima de opciones
+				if ( Gdx.input.getX() > ((p_width/2) - (text_x[2]/2)) && Gdx.input.getX() < ( (p_width/2) + (text_x[2]/2) ) 
+					 && (p_height-Gdx.input.getY()) > ( (p_height/2) - text_y[2] ) && (p_height-Gdx.input.getY()) < ((p_height/2) )	){
+					fuente.setColor(0, 0, 0, 1);
+					fuente.draw( game.batch, str_inicio[2], (p_width/2) - (text_x[2]/2), (p_height/2)  );
+				}
+				
+				// encima de salir
+				if ( Gdx.input.getX() > ((p_width/2) - (text_x[3]/2)) && Gdx.input.getX() < ((p_width/2) + (text_x[3]/2) ) 
+					 && (p_height-Gdx.input.getY()) > ((p_height/2) - (text_y[3]*2) - text_y[3] ) && (p_height-Gdx.input.getY()) < ((p_height/2) - (text_y[3]*2))	){
+					fuente.setColor(0, 0, 0, 1);
+					fuente.draw( game.batch, str_inicio[3], (p_width/2) - (text_x[3]/2), (p_height/2) - (text_y[3]*2) );				
+				}
+				
+			}
+		}else{
+			
+			// saliendo 
+			
+		}
 			
 		game.batch.end();
+		
+		// cuando soltamos
+		if (Gdx.input.justTouched()){
+			// encima de jugar
+			if ( Gdx.input.getX() > ((p_width/2) - (text_x[1]/2)) && Gdx.input.getX() < ((p_width/2) + (text_x[1]/2) ) 
+				 && (p_height-Gdx.input.getY()) < ((p_height/2) + (text_y[1]*2)) && (p_height-Gdx.input.getY()) > ((p_height/2) + (text_y[1]*2) - text_y[1])	){
+				
+				
+			}
+
+			// encima de opciones
+			if ( Gdx.input.getX() > ((p_width/2) - (text_x[2]/2)) && Gdx.input.getX() < ( (p_width/2) + (text_x[2]/2) ) 
+				&& (p_height-Gdx.input.getY()) > ( (p_height/2) - text_y[2] ) && (p_height-Gdx.input.getY()) < ((p_height/2) )	){
+
+				game.setScreen(game.p_opcion);
+			
+			}
+			
+			// encima de salir
+			if ( Gdx.input.getX() > ((p_width/2) - (text_x[3]/2)) && Gdx.input.getX() < ((p_width/2) + (text_x[3]/2) ) 
+				 && (p_height-Gdx.input.getY()) > ((p_height/2) - (text_y[3]*2) - text_y[3] ) && (p_height-Gdx.input.getY()) < ((p_height/2) - (text_y[3]*2))	){
+							
+			}		
+		}
 	}
 
 	@Override

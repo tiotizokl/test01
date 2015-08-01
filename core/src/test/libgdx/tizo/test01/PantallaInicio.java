@@ -87,10 +87,10 @@ public class PantallaInicio extends Pantalla {
 		
 		// comprobamos si se tocado la pantalla
 		if (Gdx.input.isTouched()){
-			game.setScreen(game.p_menu);
+		
 		}
 		if (Gdx.input.justTouched()){
-						
+			game.setScreen(game.p_menu);
 		}
 	
 		
