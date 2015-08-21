@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 
 public class PantallaMenu extends Pantalla {
 	
+	// variable para guardar graficos
 	Texture img_ini01;
 	
 	private OrthographicCamera camara;
@@ -76,6 +77,8 @@ public class PantallaMenu extends Pantalla {
 		
 		
 		game.batch.begin();
+		
+		
 		if (saliendo==0){
 			
 		

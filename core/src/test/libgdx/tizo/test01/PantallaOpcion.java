@@ -4,7 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public class PantallaOpcion extends Pantalla {
@@ -16,7 +15,6 @@ public class PantallaOpcion extends Pantalla {
 	
 	TextureRegion [] cartel_menu = new TextureRegion [4];
 	
-	private BitmapFont fuente;
 	CharSequence[] str_inicio = new CharSequence[2];
 	
 	private OrthographicCamera camara;	
@@ -56,8 +54,7 @@ public class PantallaOpcion extends Pantalla {
 		
 		camara = new OrthographicCamera(p_width,p_height);
 		
-		fuente = new BitmapFont(Gdx.files.internal("font001.fnt"),false);
-	
+		
 		cartel_menu[0] = new TextureRegion(img_ini01, 80, 600, 320, 60);
 		cartel_menu[1] = new TextureRegion(img_ini01, 80, 660, 320, 60);
 		cartel_menu[2] = new TextureRegion(img_ini01, 80, 720, 320, 60);
@@ -99,12 +96,22 @@ public class PantallaOpcion extends Pantalla {
 		if (Gdx.input.isTouched()){
 	
 		}
+		
+		// comprobamos si se ha "soltado" la pantalla
 		if (Gdx.input.justTouched()){
 			
+			// volver atras
 			if (Gdx.input.getX()>(p_width/2)-convert_Xwidth(160) && Gdx.input.getX()<(p_width/2)+convert_Xwidth(160) &&
 				(p_height-Gdx.input.getY())>(p_height/2)-convert_Yheight(150) && (p_height-Gdx.input.getY())<(p_height/2)-convert_Yheight(90) ){
 				game.setScreen(game.p_menu);
 				
+			}
+			
+			// a pantalla de creditos
+			if (Gdx.input.getX()>(p_width/2)-convert_Xwidth(160) && Gdx.input.getX()<(p_width/2)+convert_Xwidth(160) &&
+					(p_height-Gdx.input.getY())>(p_height/2)-convert_Yheight(30) && (p_height-Gdx.input.getY())<(p_height/2)+convert_Yheight(30) ){
+					game.setScreen(game.p_creditos);
+					
 			}
 			
 						
